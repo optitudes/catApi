@@ -1,27 +1,30 @@
-import 'package:cat_api/bussines_logic/model/breed_model.dart';
+import 'package:cat_api/presentation/model/ca_pl_votation_breed.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/breeds_provider.dart';
 
 class CABreedSlider extends StatelessWidget {
-  CABreedSlider({super.key});
+  const CABreedSlider({super.key});
 
   @override
   Widget build(BuildContext context) {
     var breedProvider = Provider.of<BreedsProvider>(context);
-    List<BLBreed> breedsAvailable = breedProvider.breedsAvailable;
-    bool isBreedsAvailable = breedsAvailable.isNotEmpty;
-    String? url = isBreedsAvailable? breedsAvailable[0].image?.url : "https://is3-ssl.mzstatic.com/image/thumb/Music6/v4/d5/be/ef/d5beefbe-b755-4dfd-dbf7-534aeeb8df79/811868414980_cover.jpg/500x500bb.webp";
+    CAPLVotationBreed? randomCAPLBreed = breedProvider.getRandomCAPLBreed();
+
     return Container(
+      color: const Color.fromARGB(255, 95, 139, 221),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
-        child: FadeInImage(
-          image: NetworkImage(url!),
-          fit: BoxFit.cover,
-          placeholder: AssetImage("lib/resources/png/no-cat.jpeg"),
-        ),
-      ),
+        child: breedProvider.isBreedsAvailable?
+        FadeInImage(
+          image: NetworkImage(randomCAPLBreed!.imageUrl ?? ""),
+             fit: BoxFit.cover,
+          placeholder: const AssetImage("lib/resources/png/loadind.webp"),
+        )
+        :
+        const Text("Loading...")
+      ,),
     );
   }
 }

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../../data/breeds_provider.dart';
 import '../widgets/ca_breed_slider.dart';
 
 class BreedVotationMenuView extends StatelessWidget {
@@ -9,22 +6,19 @@ class BreedVotationMenuView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var breedsProvider = Provider.of<BreedsProvider>(context);
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.lightBlue,
         appBar: AppBar(
           title: const Text("Cats API"),
+          actions: const [Text("Action 1"),Text("Action 2")],
         ),
         body: SafeArea(
           child: Center(
-              child: Column(
-              
-
-              
+              child: Column(  
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
-            children: [CABreedSlider()],
+            children: const [ CABreedSlider()],
           )
               // Column(
               // mainAxisAlignment: MainAxisAlignment.center,
@@ -35,15 +29,5 @@ class BreedVotationMenuView extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class CACardBreed extends StatelessWidget {
-  String title = '';
-  CACardBreed({String title = 'vacio'});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
