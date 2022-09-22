@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../widgets/ca_breed_slider.dart';
 
 class BreedVotationMenuView extends StatelessWidget {
@@ -11,14 +12,25 @@ class BreedVotationMenuView extends StatelessWidget {
         backgroundColor: Colors.lightBlue,
         appBar: AppBar(
           title: const Text("Cats API"),
-          actions: const [Text("Action 1"),Text("Action 2")],
+          elevation: 0,
+          // ignore: avoid_print
+          actions: [
+            IconButton(
+                onPressed: (() => {print("object")}),
+                icon: const FaIcon(FontAwesomeIcons.heart)
+                ),
+             IconButton(
+                onPressed: (() => {print("object")}),
+                icon: const FaIcon(FontAwesomeIcons.arrowUpAZ)
+                )
+          ],
         ),
         body: SafeArea(
           child: Center(
-              child: Column(  
+              child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
-            children: const [ CABreedSlider()],
+            children: const [CABreedSlider()],
           )
               // Column(
               // mainAxisAlignment: MainAxisAlignment.center,
