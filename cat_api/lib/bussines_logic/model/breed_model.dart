@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_this
+
 class BLBreed {
   Weight? weight;
   String? id;
@@ -79,8 +81,7 @@ class BLBreed {
       this.image});
 
   BLBreed.fromJson(Map<String, dynamic> json) {
-    weight =
-        json['weight'] != null ? Weight.fromJson(json['weight']) : null;
+    weight = json['weight'] != null ? Weight.fromJson(json['weight']) : null;
     id = json['id'];
     name = json['name'];
     cfaUrl = json['cfa_url'];
@@ -120,51 +121,9 @@ class BLBreed {
     image = json['image'] != null ? Image.fromJson(json['image']) : null;
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (weight != null) {
-      data['weight'] = weight!.toJson();
-    }
-    data['id'] = id;
-    data['name'] = name;
-    data['cfa_url'] = cfaUrl;
-    data['vetstreet_url'] = vetstreetUrl;
-    data['vcahospitals_url'] = vcahospitalsUrl;
-    data['temperament'] = temperament;
-    data['origin'] = origin;
-    data['country_codes'] = countryCodes;
-    data['country_code'] = countryCode;
-    data['description'] = description;
-    data['life_span'] = lifeSpan;
-    data['indoor'] = indoor;
-    data['lap'] = lap;
-    data['alt_names'] = altNames;
-    data['adaptability'] = adaptability;
-    data['affection_level'] = affectionLevel;
-    data['child_friendly'] = childFriendly;
-    data['dog_friendly'] = dogFriendly;
-    data['energy_level'] = energyLevel;
-    data['grooming'] = grooming;
-    data['health_issues'] = healthIssues;
-    data['intelligence'] = intelligence;
-    data['shedding_level'] = sheddingLevel;
-    data['social_needs'] = socialNeeds;
-    data['stranger_friendly'] = strangerFriendly;
-    data['vocalisation'] = vocalisation;
-    data['experimental'] = experimental;
-    data['hairless'] = hairless;
-    data['natural'] = natural;
-    data['rare'] = rare;
-    data['rex'] = rex;
-    data['suppressed_tail'] = suppressedTail;
-    data['short_legs'] = shortLegs;
-    data['wikipedia_url'] = wikipediaUrl;
-    data['hypoallergenic'] = hypoallergenic;
-    data['reference_image_id'] = referenceImageId;
-    if (image != null) {
-      data['image'] = image!.toJson();
-    }
-    return data;
+  @override
+  String toString() {
+    return "name ${this.name}  origin ${this.origin}";
   }
 }
 
@@ -179,12 +138,6 @@ class Weight {
     metric = json['metric'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['imperial'] = imperial;
-    data['metric'] = metric;
-    return data;
-  }
 }
 
 class Image {
@@ -200,14 +153,5 @@ class Image {
     width = json['width'];
     height = json['height'];
     url = json['url'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['width'] = width;
-    data['height'] = height;
-    data['url'] = url;
-    return data;
   }
 }
