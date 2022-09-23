@@ -12,6 +12,7 @@ class BreedsProvider extends ChangeNotifier {
   final String _allBreedsURLComplement = '/v1/breeds';
   List<BLBreed> breedsAvailable = [];
   bool isBreedsAvailable = false;
+  CAPLVotationBreed? breedSelected;
 
   BreedsProvider() {
     getBreedsAvailables();
@@ -26,7 +27,10 @@ class BreedsProvider extends ChangeNotifier {
       List<dynamic> breedsObtained = jsonDecode(response.body);
 
       for (Map<String, dynamic> element in breedsObtained) {
-        breedsAvailableAux.add(BLBreed.fromJson(element));
+        bool isValidImage = validateImage(element);
+        if (isValidImage) {
+          breedsAvailableAux.add(BLBreed.fromJson(element));
+        }
       }
       breedsAvailable = breedsAvailableAux;
       isBreedsAvailable = true;
@@ -37,24 +41,34 @@ class BreedsProvider extends ChangeNotifier {
     }
   }
 
-  List<CAPLVotationBreed>? getCAPLVotationBreedsAvailables() {
-    List<CAPLVotationBreed> cAPlVotationBreedAvailables = [];
-    bool isBreedsAvailable = breedsAvailable.isNotEmpty;
-    if (isBreedsAvailable) {
-      for (BLBreed blBreed in breedsAvailable) {
-        cAPlVotationBreedAvailables.add(CAPLVotationBreed.fromBLBreed(blBreed));
-      }
-      return cAPlVotationBreedAvailables;
-    }
-    return cAPlVotationBreedAvailables;
-  }
-
   CAPLVotationBreed? getRandomCAPLBreed() {
     if (isBreedsAvailable) {
       int breedPos = Random().nextInt(breedsAvailable.length);
+
       return CAPLVotationBreed.fromBLBreed(breedsAvailable[breedPos]);
     } else {
       return null;
     }
+  }
+
+  bool validateImage(Map<String, dynamic> element) {
+    bool isValidImage = false;
+    // preguntar a carlos cómo implementar alguna alternativa al guard let aquí
+    if (element['image'] != null && element['image']['url'] != null) {
+      isValidImage = true;
+    }
+    return isValidImage;
+  }
+
+  updateRandomCAPLBreed() {
+    breedSelected = getRandomCAPLBreed();
+  }
+
+  showBreedsAndScore() {
+    print("### las razas y sus puntajes no estan disponibles por el momento");
+  }
+
+  showBreedGroupedByName() {
+    print("### las razas agrupadas por nombre no están disponibles");
   }
 }
