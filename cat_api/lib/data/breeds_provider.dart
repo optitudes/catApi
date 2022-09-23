@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:http/http.dart' as http;
+import 'package:cat_api/presentation/model/TipeOfList.dart';
 import 'package:cat_api/presentation/model/ca_pl_votation_breed.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 // import 'dart:convert' as convert;
 
 import 'package:cat_api/bussines_logic/model/breed_model.dart';
@@ -10,9 +11,11 @@ import 'package:cat_api/bussines_logic/model/breed_model.dart';
 class BreedsProvider extends ChangeNotifier {
   final String _baseURl = 'api.thecatapi.com';
   final String _allBreedsURLComplement = '/v1/breeds';
+  Map<String, int> breedsScores = {};
   List<BLBreed> breedsAvailable = [];
   bool isBreedsAvailable = false;
   CAPLVotationBreed? breedSelected;
+  TipeOfList tipeOfList = TipeOfList.INFO;
 
   BreedsProvider() {
     getBreedsAvailables();
@@ -34,11 +37,17 @@ class BreedsProvider extends ChangeNotifier {
       }
       breedsAvailable = breedsAvailableAux;
       isBreedsAvailable = true;
+      breedSelected = getRandomCAPLBreed();
 
       notifyListeners();
     } else {
       // print('Ocurrió un error al obtener las razas: ${response.statusCode}.');
     }
+  }
+
+  updateCAPLBreedSelected() {
+    breedSelected = getRandomCAPLBreed();
+    notifyListeners();
   }
 
   CAPLVotationBreed? getRandomCAPLBreed() {
@@ -60,15 +69,80 @@ class BreedsProvider extends ChangeNotifier {
     return isValidImage;
   }
 
-  updateRandomCAPLBreed() {
-    breedSelected = getRandomCAPLBreed();
-  }
-
   showBreedsAndScore() {
     print("### las razas y sus puntajes no estan disponibles por el momento");
   }
 
   showBreedGroupedByName() {
     print("### las razas agrupadas por nombre no están disponibles");
+  }
+
+  addVoteUpToBreed(String? breedId) {
+    bool isValidId = validateBreedId(breedId);
+    print("estado del id para voto positivo $isValidId");
+    if (isValidId) {
+      addVoteToBreed(breedId!, 1);
+    }
+  }
+
+  addVoteToBreed(String id, int voteValue) {
+    bool isIdAlreadyRegistered = breedsScores.containsKey(id);
+
+    isIdAlreadyRegistered
+        ? breedsScores[id] = voteValue
+        : breedsScores.addAll({id: voteValue});
+    print(breedsScores.keys);
+    print(breedsScores.values);
+
+    updateCAPLBreedSelected();
+    notifyListeners();
+  }
+
+  addVoteDownToBreed(String? breedId) {
+    bool isValidId = validateBreedId(breedId);
+    if (isValidId) {
+      addVoteToBreed(breedId!, -1);
+    }
+  }
+
+  bool validateBreedId(String? breedId) {
+    return breedId != null && breedId.isNotEmpty;
+  }
+
+  setTipeOfList(TipeOfList breeds_and_score) {
+    print("## breedTipe $breeds_and_score breed actual $tipeOfList");
+    tipeOfList = breeds_and_score;
+    print("## estado final${this.tipeOfList}");
+    notifyListeners();
+  }
+
+  String getEndTitle() {
+    print(tipeOfList);
+    switch (tipeOfList) {
+      case TipeOfList.INFO:
+        {
+          return "infomacion";
+        }
+      case TipeOfList.BREEDS_AND_SCORE:
+        {
+          return "raza y scrore";
+        }
+      case TipeOfList.BREED_ORDERED_BY_INITIAL:
+        {
+          return "Raza ordenada por inicial";
+        }
+      default:
+        {
+          return "ni idea pa";
+        }
+    }
+  }
+
+  getNumberOfRatedBreeds() {
+    return breedsScores.length;
+  }
+
+  CAPLVotationBreed? getCAPLBreedSelected() {
+    return breedSelected;
   }
 }

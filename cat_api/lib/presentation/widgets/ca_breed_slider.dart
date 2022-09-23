@@ -11,8 +11,6 @@ class CABreedSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var breedProvider = Provider.of<BreedsProvider>(context);
-    breedProvider.updateRandomCAPLBreed();
-
     return Container(
       color: const Color.fromARGB(255, 95, 139, 221),
       child: Column(
@@ -23,12 +21,7 @@ class CABreedSlider extends StatelessWidget {
           const CABreedVotationCard()
           :
           const Text("Loading...")
-        ,),Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [IconButton(onPressed: ()=> {print("### los votos positivos no están disponibles por el momento")}, icon:  const FaIcon(FontAwesomeIcons.heartCirclePlus)),
-                    IconButton(onPressed: ()=> {print("### los votos negativos no están disponibles por el momento")}, icon:  const FaIcon(FontAwesomeIcons.heartCircleMinus)),],
-        )
+        ,),
         
 
         ],
