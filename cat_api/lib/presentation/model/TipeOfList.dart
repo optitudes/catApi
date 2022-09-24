@@ -1,0 +1,5 @@
+enum TipeOfList{
+   INFO,
+   BREEDS_AND_SCORE,
+   BREED_ORDERED_BY_INITIAL
+}

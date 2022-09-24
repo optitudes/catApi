@@ -1,5 +1,6 @@
 import 'package:cat_api/data/breeds_provider.dart';
 import 'package:cat_api/presentation/model/TipeOfList.dart';
+import 'package:cat_api/presentation/widgets/ca_breedScore_card.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -23,14 +24,14 @@ class BreedVotationMenuView extends StatelessWidget {
         endDrawer: Drawer(
           child: SafeArea(
               child: Container(
-            color: Color.fromARGB(255, 45, 109, 172),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              // mainAxisSize: MainAxisSize.max,
-              children: [Text(breedProvider.getEndTitle()),
-              //  BreedListView()],
-              ]
-            ),
+            color: Colors.white,
+            child: Column(mainAxisAlignment: MainAxisAlignment.start,
+                // mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text(breedProvider.getEndTitle()),
+                  const Divider(),
+                  BreedListView(),
+                ]),
           )),
         ),
         body: SafeArea(
@@ -54,8 +55,10 @@ class ShowBreedsGroupedByName extends StatelessWidget {
   Widget build(BuildContext context) {
     var breedProvider = Provider.of<BreedsProvider>(context);
     return IconButton(
-        onPressed: (() => {breedProvider.setTipeOfList(TipeOfList.BREED_ORDERED_BY_INITIAL),
-              Scaffold.of(context).openEndDrawer()}),
+        onPressed: (() => {
+              breedProvider.setTipeOfList(TipeOfList.BREED_ORDERED_BY_INITIAL),
+              Scaffold.of(context).openEndDrawer()
+            }),
         icon: const FaIcon(FontAwesomeIcons.arrowUpAZ));
   }
 }
@@ -72,8 +75,51 @@ class BreedListView extends StatelessWidget {
     // return Text('asdfads');
     return Expanded(
       child: ListView(
-        children: [Text('sdfsdfsdfsdf')],
+        children: [getCardsOfView(tipeOfList, context)],
       ),
+    );
+  }
+
+  Widget getCardsOfView(TipeOfList tipeOfList, BuildContext context) {
+    switch (tipeOfList) {
+      case TipeOfList.BREEDS_AND_SCORE:
+        {
+          return getBreesScore(context);
+        }
+      case TipeOfList.BREED_ORDERED_BY_INITIAL:
+        {
+          return getBreedsOrderedByInitialName(context);
+        }
+      default:
+        {
+          return Text("default");
+        }
+    }
+  }
+
+  Widget getBreedsOrderedByInitialName(BuildContext context) {
+    var breedsProvider = Provider.of<BreedsProvider>(context);
+    int totalBreedsAvailable = breedsProvider.breedsAvailable.length;
+    return ListView.builder(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: totalBreedsAvailable,
+      itemBuilder: (context, index) {
+        return Text('${breedsProvider.getCAPLBreedOrderedByName(index)}');
+      },
+    );
+  }
+  
+  Widget getBreesScore(BuildContext context) {
+    var breedsProvider = Provider.of<BreedsProvider>(context);
+    int totalBreedsScoreAvailable = breedsProvider.breedsScores.length;
+    return ListView.builder(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: totalBreedsScoreAvailable,
+      itemBuilder: (context, index) {
+        return CABreedScoreCard(breedsProvider.getCAPLBreedSocre(index));
+      },
     );
   }
 }

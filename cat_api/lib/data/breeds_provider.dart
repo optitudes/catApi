@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:cat_api/presentation/model/ca_pl_breed_score.dart';
 import 'package:http/http.dart' as http;
 import 'package:cat_api/presentation/model/TipeOfList.dart';
 import 'package:cat_api/presentation/model/ca_pl_votation_breed.dart';
@@ -112,7 +113,7 @@ class BreedsProvider extends ChangeNotifier {
   setTipeOfList(TipeOfList breeds_and_score) {
     print("## breedTipe $breeds_and_score breed actual $tipeOfList");
     tipeOfList = breeds_and_score;
-    print("## estado final${this.tipeOfList}");
+    print("## estado final${tipeOfList}");
     notifyListeners();
   }
 
@@ -144,5 +145,19 @@ class BreedsProvider extends ChangeNotifier {
 
   CAPLVotationBreed? getCAPLBreedSelected() {
     return breedSelected;
+  }
+
+  getCAPLBreedSocre(int index) {
+    Iterable<String> iDsForBreed = breedsScores.keys;
+    String selectedBreedId = iDsForBreed.elementAt(index);
+    int voteValue = breedsScores[iDsForBreed.elementAt(index)]!;
+    BLBreed selectedBreed =
+        breedsAvailable.firstWhere((element) => element.id == selectedBreedId);
+
+    return CAPLBreedScore.fromBLBreed(selectedBreed, voteValue);
+  }
+
+  getCAPLBreedOrderedByName(int index) {
+    return breedsAvailable[index];
   }
 }
