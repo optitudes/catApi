@@ -1,4 +1,4 @@
-enum TipeOfList{
+enum TipeOfView{
    INFO,
    BREEDS_AND_SCORE,
    BREED_ORDERED_BY_INITIAL

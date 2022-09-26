@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:cat_api/presentation/model/ca_pl_breed_decription.dart';
 import 'package:cat_api/presentation/model/ca_pl_breed_score.dart';
 import 'package:http/http.dart' as http;
-import 'package:cat_api/presentation/model/TipeOfList.dart';
+import 'package:cat_api/presentation/model/TipeOfView.dart';
 import 'package:cat_api/presentation/model/ca_pl_votation_breed.dart';
 import 'package:flutter/material.dart';
 // import 'dart:convert' as convert;
@@ -17,7 +17,7 @@ class BreedsProvider extends ChangeNotifier {
   List<BLBreed> breedsAvailable = [];
   bool isBreedsAvailable = false;
   CAPLVotationBreed? breedSelected;
-  TipeOfList tipeOfList = TipeOfList.INFO;
+  TipeOfView tipeOfView = TipeOfView.INFO;
 
   BreedsProvider() {
     getBreedsAvailables();
@@ -111,31 +111,30 @@ class BreedsProvider extends ChangeNotifier {
     return breedId != null && breedId.isNotEmpty;
   }
 
-  setTipeOfList(TipeOfList breeds_and_score) {
-    print("## breedTipe $breeds_and_score breed actual $tipeOfList");
-    tipeOfList = breeds_and_score;
-    print("## estado final${tipeOfList}");
+  setTipeOfView(TipeOfView breeds_and_score) {
+    print("## breedTipe $breeds_and_score breed actual $TipeOfView");
+    tipeOfView = breeds_and_score;
+    print("## estado final${tipeOfView}");
     notifyListeners();
   }
 
   String getEndTitle() {
-    print(tipeOfList);
-    switch (tipeOfList) {
-      case TipeOfList.INFO:
+    switch (tipeOfView) {
+      case TipeOfView.INFO:
         {
-          return "infomacion";
+          return "Infomacion";
         }
-      case TipeOfList.BREEDS_AND_SCORE:
+      case TipeOfView.BREEDS_AND_SCORE:
         {
-          return "raza y scrore";
+          return "Breed And Score";
         }
-      case TipeOfList.BREED_ORDERED_BY_INITIAL:
+      case TipeOfView.BREED_ORDERED_BY_INITIAL:
         {
-          return "Raza ordenada por inicial";
+          return "Breed Ordered By Initial";
         }
       default:
         {
-          return "ni idea pa";
+          return "";
         }
     }
   }
@@ -160,5 +159,22 @@ class BreedsProvider extends ChangeNotifier {
 
   getCAPLBreedOrderedByName(int index) {
     return CAPLBreedDescription.fromBLBreed(breedsAvailable[index]);
+  }
+
+  int getTotalBreedsAvailableByTipeOfView() {
+    switch (tipeOfView) {
+      case TipeOfView.BREEDS_AND_SCORE:
+        {
+          return breedsScores.length;
+        }
+      case TipeOfView.BREED_ORDERED_BY_INITIAL:
+        {
+          return breedsAvailable.length;
+        }
+      default:
+        {
+          return 0;
+        }
+    }
   }
 }
