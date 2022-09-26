@@ -46,31 +46,20 @@ class CABreedVotationCard extends StatelessWidget {
                 children: [
                   IconButton(
                       onPressed: () =>
-                          {breedProvider.addVoteUpToBreed(breedSelected!.id)},
+                          {breedProvider.addVoteLikeToBreed(breedSelected!.id)},
                       icon: const FaIcon(FontAwesomeIcons.heartCirclePlus)),
                   IconButton(
                       onPressed: () =>
-                          {breedProvider.addVoteDownToBreed(breedSelected!.id)},
+                          {breedProvider.addVoteDislikeToBreed(breedSelected!.id)},
                       icon: const FaIcon(FontAwesomeIcons.heartCircleMinus)),
                   IconButton(
                       onPressed: () =>
-                          {breedProvider.updateCAPLBreedSelected()},
+                          {breedProvider.updateCAPLVotationBreedSelected()},
                       icon: const FaIcon(FontAwesomeIcons.arrowRight)),
                 ],
               )
             ])
-            // ClipRRect(
-            //   borderRadius: BorderRadius.circular(20),
-            //   child: breedProvider.isBreedsAvailable
-            //       ? FadeInImage(
-            //           image: NetworkImage(randomCAPLBreed!.imageUrl ?? ""),
-            //           fit: BoxFit.cover,
-            //           placeholder:
-            //               const AssetImage("lib/resources/png/loadind.webp"),
-            //         )
-            //       : const Text("Loading..."),
-            // ),
-            // Text("data")
+
           ],
         );
       },

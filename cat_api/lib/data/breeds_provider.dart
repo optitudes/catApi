@@ -39,7 +39,7 @@ class BreedsProvider extends ChangeNotifier {
       }
       breedsAvailable = breedsAvailableAux;
       isBreedsAvailable = true;
-      breedSelected = getRandomCAPLBreed();
+      breedSelected = getRandomCAPLVotationBreed();
 
       notifyListeners();
     } else {
@@ -47,15 +47,14 @@ class BreedsProvider extends ChangeNotifier {
     }
   }
 
-  updateCAPLBreedSelected() {
-    breedSelected = getRandomCAPLBreed();
+  updateCAPLVotationBreedSelected() {
+    breedSelected = getRandomCAPLVotationBreed();
     notifyListeners();
   }
 
-  CAPLVotationBreed? getRandomCAPLBreed() {
+  CAPLVotationBreed? getRandomCAPLVotationBreed() {
     if (isBreedsAvailable) {
       int breedPos = Random().nextInt(breedsAvailable.length);
-
       return CAPLVotationBreed.fromBLBreed(breedsAvailable[breedPos]);
     } else {
       return null;
@@ -71,17 +70,8 @@ class BreedsProvider extends ChangeNotifier {
     return isValidImage;
   }
 
-  showBreedsAndScore() {
-    print("### las razas y sus puntajes no estan disponibles por el momento");
-  }
-
-  showBreedGroupedByName() {
-    print("### las razas agrupadas por nombre no están disponibles");
-  }
-
-  addVoteUpToBreed(String? breedId) {
+  addVoteLikeToBreed(String? breedId) {
     bool isValidId = validateBreedId(breedId);
-    print("estado del id para voto positivo $isValidId");
     if (isValidId) {
       addVoteToBreed(breedId!, 1);
     }
@@ -94,11 +84,11 @@ class BreedsProvider extends ChangeNotifier {
         ? breedsScores[id] = voteValue
         : breedsScores.addAll({id: voteValue});
 
-    updateCAPLBreedSelected();
+    updateCAPLVotationBreedSelected();
     notifyListeners();
   }
 
-  addVoteDownToBreed(String? breedId) {
+  addVoteDislikeToBreed(String? breedId) {
     bool isValidId = validateBreedId(breedId);
     if (isValidId) {
       addVoteToBreed(breedId!, -1);
@@ -109,14 +99,12 @@ class BreedsProvider extends ChangeNotifier {
     return breedId != null && breedId.isNotEmpty;
   }
 
-  setTipeOfView(TipeOfView breeds_and_score) {
-    print("## breedTipe $breeds_and_score breed actual $TipeOfView");
-    tipeOfView = breeds_and_score;
-    print("## estado final${tipeOfView}");
+  setTipeOfView(TipeOfView tipeOfViewAux) {
+    tipeOfView = tipeOfViewAux;
     notifyListeners();
   }
 
-  String getEndTitle() {
+  String getTitleOfView() {
     switch (tipeOfView) {
       case TipeOfView.INFO:
         {
@@ -146,6 +134,7 @@ class BreedsProvider extends ChangeNotifier {
   }
 
   getCAPLBreedSocre(int index) {
+    //preguntar a carlos una manera más eficiente de hacer esto
     Iterable<String> iDsForBreed = breedsScores.keys;
     String selectedBreedId = iDsForBreed.elementAt(index);
     int voteValue = breedsScores[iDsForBreed.elementAt(index)]!;

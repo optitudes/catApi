@@ -7,6 +7,7 @@ import 'package:cat_api/presentation/widgets/ca_breed_votation_card.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+
 class BreedVotationMenuView extends StatelessWidget {
   const BreedVotationMenuView({super.key});
 
@@ -21,7 +22,7 @@ class BreedVotationMenuView extends StatelessWidget {
           title: const Text("Cats API"),
           elevation: 0,
           // ignore: avoid_print
-          actions: const [BreedsScoreButton(), BreedsGroupedByNameButton(), ],
+          actions: const [BreedsScoreButton(), BreedsGroupedByNameButton(),],
         ),
         endDrawer: Drawer(
           child: SafeArea(
@@ -30,41 +31,35 @@ class BreedVotationMenuView extends StatelessWidget {
             child: Column(mainAxisAlignment: MainAxisAlignment.start,
                 // mainAxisSize: MainAxisSize.max,
                 children: [
-                  Text(breedProvider.getEndTitle()),
+                  Text(breedProvider.getTitleOfView()),
                   const Divider(),
                   const BreedsByTipeOfView(),
                 ]),
           )),
         ),
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: getRandomVotationBreed(context),
-            // child: Column(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   mainAxisSize: MainAxisSize.min,
-            //   children: [CABreedSlider()],
-            // ),
-          ),
+          child: getRandomVotationBreed(context),
         ),
       ),
     );
   }
-  
+
   getRandomVotationBreed(BuildContext context) {
     var breedProvider = Provider.of<BreedsProvider>(context);
     return Container(
       color: const Color.fromARGB(255, 95, 139, 221),
       child: Column(
-        children: [ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-
-          child: breedProvider.isBreedsAvailable?
-          const CABreedVotationCard()
-          :
-          const Text("Loading...")
-        ,),
-        
-
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            // color: Colors.amber,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: breedProvider.isBreedsAvailable
+                  ? const CABreedVotationCard()
+                  : const Text("Loading..."),
+            ),
+          ),
         ],
       ),
     );
@@ -96,11 +91,12 @@ class BreedsByTipeOfView extends StatelessWidget {
     );
   }
 
-  Widget getBreedCardByTypeOfView(TipeOfView tipeOfView, BuildContext context, int index) {
+  Widget getBreedCardByTypeOfView(
+      TipeOfView tipeOfView, BuildContext context, int index) {
     switch (tipeOfView) {
       case TipeOfView.BREEDS_AND_SCORE:
         {
-          return getBreedsScore(context,index);
+          return getBreedsScore(context, index);
         }
       case TipeOfView.BREED_ORDERED_BY_INITIAL:
         {
@@ -115,7 +111,8 @@ class BreedsByTipeOfView extends StatelessWidget {
 
   Widget getBreedsOrderedByInitialName(BuildContext context, int index) {
     var breedsProvider = Provider.of<BreedsProvider>(context);
-    return CABreedOderedByNameCard(breedsProvider.getCAPLBreedOrderedByName(index));
+    return CABreedOderedByNameCard(
+        breedsProvider.getCAPLBreedOrderedByName(index));
   }
 
   Widget getBreedsScore(BuildContext context, int index) {
@@ -138,6 +135,7 @@ class BreedsScoreButton extends StatelessWidget {
         icon: const FaIcon(FontAwesomeIcons.heart));
   }
 }
+
 class BreedsGroupedByNameButton extends StatelessWidget {
   const BreedsGroupedByNameButton({super.key});
 
