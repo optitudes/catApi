@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:cat_api/presentation/model/ca_pl_breed_decription.dart';
 import 'package:cat_api/presentation/model/ca_pl_breed_score.dart';
 import 'package:http/http.dart' as http;
 import 'package:cat_api/presentation/model/TipeOfList.dart';
@@ -158,6 +159,6 @@ class BreedsProvider extends ChangeNotifier {
   }
 
   getCAPLBreedOrderedByName(int index) {
-    return breedsAvailable[index];
+    return CAPLBreedDescription.fromBLBreed(breedsAvailable[index]);
   }
 }

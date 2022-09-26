@@ -1,6 +1,7 @@
 import 'package:cat_api/data/breeds_provider.dart';
 import 'package:cat_api/presentation/model/TipeOfList.dart';
 import 'package:cat_api/presentation/widgets/ca_breedScore_card.dart';
+import 'package:cat_api/presentation/widgets/ca_breed_ordered_by_name_card.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,7 @@ class BreedVotationMenuView extends StatelessWidget {
           title: const Text("Cats API"),
           elevation: 0,
           // ignore: avoid_print
-          actions: [const ShowBreedsScoreButton(), ShowBreedsGroupedByName()],
+          actions: const [ ShowBreedsScoreButton(), ShowBreedsGroupedByName()],
         ),
         endDrawer: Drawer(
           child: SafeArea(
@@ -105,7 +106,7 @@ class BreedListView extends StatelessWidget {
       shrinkWrap: true,
       itemCount: totalBreedsAvailable,
       itemBuilder: (context, index) {
-        return Text('${breedsProvider.getCAPLBreedOrderedByName(index)}');
+        return CABreedOderedByNameCard(breedsProvider.getCAPLBreedOrderedByName(index));
       },
     );
   }
