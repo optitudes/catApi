@@ -93,8 +93,6 @@ class BreedsProvider extends ChangeNotifier {
     isIdAlreadyRegistered
         ? breedsScores[id] = voteValue
         : breedsScores.addAll({id: voteValue});
-    print(breedsScores.keys);
-    print(breedsScores.values);
 
     updateCAPLBreedSelected();
     notifyListeners();

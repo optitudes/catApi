@@ -18,6 +18,7 @@ class CABreedVotationCard extends StatelessWidget {
         return Column(
           children: [
             ConstrainedBox(
+              // ignore: prefer_const_constructors
               constraints: BoxConstraints(
                 maxHeight: 300,
                 maxWidth: 300,
@@ -28,11 +29,17 @@ class CABreedVotationCard extends StatelessWidget {
                 placeholder: const AssetImage("lib/resources/png/loadind.webp"),
               ),
             ),
-            Column(children: [
-              Text("Name : ${breedSelected.name}"),
-              Text("Temperament : ${breedSelected.temperament}"),
-              Text("Origin : ${breedSelected.origin}"),
-              Text("Description : ${breedSelected.description}\n"),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+               Text('Name:',style: Theme.of(context).textTheme.headline4),
+                              Text('${breedSelected.name}',style: Theme.of(context).textTheme.subtitle1),
+               Text('Temperament:',style: Theme.of(context).textTheme.headline4),
+                              Text('${breedSelected.temperament}',style: Theme.of(context).textTheme.subtitle1),
+               Text('Origin:',style: Theme.of(context).textTheme.headline4),
+                              Text('${breedSelected.origin}',style: Theme.of(context).textTheme.subtitle1),
+               Text('Description:',style: Theme.of(context).textTheme.headline4),
+                              Text('${breedSelected.description}\n',style: Theme.of(context).textTheme.subtitle1),               
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
@@ -45,6 +52,10 @@ class CABreedVotationCard extends StatelessWidget {
                       onPressed: () =>
                           {breedProvider.addVoteDownToBreed(breedSelected!.id)},
                       icon: const FaIcon(FontAwesomeIcons.heartCircleMinus)),
+                  IconButton(
+                      onPressed: () =>
+                          {breedProvider.updateCAPLBreedSelected()},
+                      icon: const FaIcon(FontAwesomeIcons.arrowRight)),
                 ],
               )
             ])

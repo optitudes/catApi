@@ -29,18 +29,25 @@ class CABreedScoreCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     cAPLBreedSocre;
-    bool isLikeVote = cAPLBreedSocre.voteValue == 1;
-
-    return Row(
+    return Column(
       children: [
-        Column(
-          children: [
-            Text('${cAPLBreedSocre.name}'),
-            Text('${cAPLBreedSocre.origin}')
-          ],
-        ),
-        Icon(cAPLBreedSocre.icon)
-      ],
+        const Divider(),
+        Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Column(
+            children: [
+                    Row(children: [Text('Name:',style: Theme.of(context).textTheme.headline2),
+                       Text( '${cAPLBreedSocre.name}',style: Theme.of(context).textTheme.subtitle1)]),
+                    Row(children: [Text('Origin:',style: Theme.of(context).textTheme.headline2),
+                       Text('${cAPLBreedSocre.origin}',style: Theme.of(context).textTheme.subtitle1)])
+            ],
+          ),
+          Icon(cAPLBreedSocre.icon)
+        ],
+      ),
+      const Divider()
+      ]
     );
   }
 

@@ -1,12 +1,12 @@
+import 'package:cat_api/commons/text_style/ca_theme_data.dart';
 import 'package:cat_api/data/breeds_provider.dart';
 import 'package:cat_api/presentation/model/TipeOfView.dart';
 import 'package:cat_api/presentation/widgets/ca_breedScore_card.dart';
 import 'package:cat_api/presentation/widgets/ca_breed_ordered_by_name_card.dart';
+import 'package:cat_api/presentation/widgets/ca_breed_votation_card.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import '../widgets/ca_breed_slider.dart';
-
 class BreedVotationMenuView extends StatelessWidget {
   const BreedVotationMenuView({super.key});
 
@@ -14,13 +14,14 @@ class BreedVotationMenuView extends StatelessWidget {
   Widget build(BuildContext context) {
     var breedProvider = Provider.of<BreedsProvider>(context);
     return MaterialApp(
+      theme: CAThemeData,
       home: Scaffold(
         backgroundColor: Color.fromARGB(255, 186, 243, 255),
         appBar: AppBar(
           title: const Text("Cats API"),
           elevation: 0,
           // ignore: avoid_print
-          actions: const [ShowBreedsScoreButton(), ShowBreedsGroupedByNameButton()],
+          actions: const [BreedsScoreButton(), BreedsGroupedByNameButton(), ],
         ),
         endDrawer: Drawer(
           child: SafeArea(
@@ -31,19 +32,40 @@ class BreedVotationMenuView extends StatelessWidget {
                 children: [
                   Text(breedProvider.getEndTitle()),
                   const Divider(),
-                  BreedsByTipeOfView(),
+                  const BreedsByTipeOfView(),
                 ]),
           )),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [CABreedSlider()],
-            ),
+            child: getRandomVotationBreed(context),
+            // child: Column(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   mainAxisSize: MainAxisSize.min,
+            //   children: [CABreedSlider()],
+            // ),
           ),
         ),
+      ),
+    );
+  }
+  
+  getRandomVotationBreed(BuildContext context) {
+    var breedProvider = Provider.of<BreedsProvider>(context);
+    return Container(
+      color: const Color.fromARGB(255, 95, 139, 221),
+      child: Column(
+        children: [ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+
+          child: breedProvider.isBreedsAvailable?
+          const CABreedVotationCard()
+          :
+          const Text("Loading...")
+        ,),
+        
+
+        ],
       ),
     );
   }
@@ -102,8 +124,8 @@ class BreedsByTipeOfView extends StatelessWidget {
   }
 }
 
-class ShowBreedsScoreButton extends StatelessWidget {
-  const ShowBreedsScoreButton({super.key});
+class BreedsScoreButton extends StatelessWidget {
+  const BreedsScoreButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -116,8 +138,8 @@ class ShowBreedsScoreButton extends StatelessWidget {
         icon: const FaIcon(FontAwesomeIcons.heart));
   }
 }
-class ShowBreedsGroupedByNameButton extends StatelessWidget {
-  const ShowBreedsGroupedByNameButton({super.key});
+class BreedsGroupedByNameButton extends StatelessWidget {
+  const BreedsGroupedByNameButton({super.key});
 
   @override
   Widget build(BuildContext context) {

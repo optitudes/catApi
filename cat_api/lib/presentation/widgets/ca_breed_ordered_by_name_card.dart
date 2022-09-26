@@ -44,34 +44,44 @@ class CABreedOrderedByNameCard extends State<CABreedOderedByNameCard> {
   Widget build(BuildContext context) {
     widget.cAPLBreedDescription;
     return Column(children: [
-      Text('name: ${widget.cAPLBreedDescription.name}'),
-      Text('origin: ${widget.cAPLBreedDescription.origin}'),
+      const Divider(),
+      Row(children: [Text('Name:',style: Theme.of(context).textTheme.headline2),
+                     Text( '${widget.cAPLBreedDescription.name}',style: Theme.of(context).textTheme.subtitle1)]),
+      Row(children: [Text('Origin:',style: Theme.of(context).textTheme.headline2),
+                     Text('${widget.cAPLBreedDescription.origin}',style: Theme.of(context).textTheme.subtitle1)]),                
       SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        child: Text('${widget.description}', style: TextStyle(fontSize: 15),),
-      ),
-      IconButton(
-          onPressed: () {
-            setDescriptionInfo();
-          },
-          icon: const FaIcon(FontAwesomeIcons.plus)),
+        child: Text(widget.description, style: Theme.of(context).textTheme.subtitle1),
+        ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
           IconButton(
-          onPressed: () {
-            clearDescriptionInfo();
-          },
-          icon: const FaIcon(FontAwesomeIcons.minus))
-
+              onPressed: () {
+                setDescriptionInfo();
+              },
+              icon: const FaIcon(FontAwesomeIcons.plus)),
+          IconButton(
+              onPressed: () {
+                clearDescriptionInfo();
+              },
+              icon: const FaIcon(FontAwesomeIcons.minus))
+        ],
+      ),
+      const Divider()
     ]);
   }
 
   setDescriptionInfo() {
     setState(() {
-      widget.description = 'description: ${widget.cAPLBreedDescription.description}';
+      widget.description =
+          '${widget.cAPLBreedDescription.description}';
     });
   }
+
   clearDescriptionInfo() {
     setState(() {
-      widget.description ='';
+      widget.description = '';
     });
   }
 }
