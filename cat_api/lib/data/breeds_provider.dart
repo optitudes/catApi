@@ -20,7 +20,7 @@ class BreedsProvider extends ChangeNotifier {
   TipeOfView tipeOfView = TipeOfView.INFO;
 
   BreedsProvider() {
-    getBreedsAvailables();
+    //TODO: crear un metodo aparte que se llame para
   }
   getBreedsAvailables() async {
     final url = Uri.https(_baseURl, _allBreedsURLComplement, {'q': '{http}'});
@@ -162,6 +162,12 @@ class BreedsProvider extends ChangeNotifier {
         {
           return 0;
         }
+    }
+  }
+  void getBreedsInfoIfNeeded() {
+    bool isBreedsInfoNeeded = !isBreedsAvailable;
+    if (isBreedsInfoNeeded) {
+      getBreedsAvailables();
     }
   }
 }

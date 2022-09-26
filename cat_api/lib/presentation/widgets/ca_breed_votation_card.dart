@@ -36,7 +36,7 @@ class CABreedVotationCard extends StatelessWidget {
                               Text('${breedSelected.name}',style: Theme.of(context).textTheme.subtitle1),
                Text('Temperament:',style: Theme.of(context).textTheme.headline4),
                               Text('${breedSelected.temperament}',style: Theme.of(context).textTheme.subtitle1),
-               Text('Origin:',style: Theme.of(context).textTheme.headline4),
+               Text('Origin:',style: Theme.of(context).textTheme.headline4,textAlign: TextAlign.center,),
                               Text('${breedSelected.origin}',style: Theme.of(context).textTheme.subtitle1),
                Text('Description:',style: Theme.of(context).textTheme.headline4),
                               Text('${breedSelected.description}\n',style: Theme.of(context).textTheme.subtitle1),               
@@ -46,11 +46,11 @@ class CABreedVotationCard extends StatelessWidget {
                 children: [
                   IconButton(
                       onPressed: () =>
-                          {breedProvider.addVoteLikeToBreed(breedSelected!.id)},
+                          {breedProvider.addVoteLikeToBreed(breedSelected.id)},
                       icon: const FaIcon(FontAwesomeIcons.heartCirclePlus)),
                   IconButton(
                       onPressed: () =>
-                          {breedProvider.addVoteDislikeToBreed(breedSelected!.id)},
+                          {breedProvider.addVoteDislikeToBreed(breedSelected.id)},
                       icon: const FaIcon(FontAwesomeIcons.heartCircleMinus)),
                   IconButton(
                       onPressed: () =>

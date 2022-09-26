@@ -30,6 +30,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
   }
 } */
 
+// ignore: must_be_immutable
 class CABreedOderedByNameCard extends StatefulWidget {
   CAPLBreedDescription cAPLBreedDescription;
   String description = '';
@@ -43,11 +44,16 @@ class CABreedOrderedByNameCard extends State<CABreedOderedByNameCard> {
   @override
   Widget build(BuildContext context) {
     widget.cAPLBreedDescription;
-    return Column(children: [
+    return Column(
+      children: [
       const Divider(),
-      Row(children: [Text('Name:',style: Theme.of(context).textTheme.headline2),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [Text('Name:',style: Theme.of(context).textTheme.headline2),
                      Text( '${widget.cAPLBreedDescription.name}',style: Theme.of(context).textTheme.subtitle1)]),
-      Row(children: [Text('Origin:',style: Theme.of(context).textTheme.headline2),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [Text('Origin:',style: Theme.of(context).textTheme.headline2),
                      Text('${widget.cAPLBreedDescription.origin}',style: Theme.of(context).textTheme.subtitle1)]),                
       SingleChildScrollView(
         scrollDirection: Axis.vertical,

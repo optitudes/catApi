@@ -9,18 +9,23 @@ class CABreedScoreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     cAPLBreedSocre;
     return Column(
+
       children: [
         const Divider(),
         Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisSize: MainAxisSize.max,
         children: [
-          Column(
-            children: [
-                    Row(children: [Text('Name:',style: Theme.of(context).textTheme.headline2),
-                       Text( '${cAPLBreedSocre.name}',style: Theme.of(context).textTheme.subtitle1)]),
-                    Row(children: [Text('Origin:',style: Theme.of(context).textTheme.headline2),
-                       Text('${cAPLBreedSocre.origin}',style: Theme.of(context).textTheme.subtitle1)])
-            ],
+          SizedBox(
+            width: 230,
+            child: Column(            
+              children: [
+                      Row(children: [Text('Name:',style: Theme.of(context).textTheme.headline2),
+                         Text( '${cAPLBreedSocre.name}',style: Theme.of(context).textTheme.subtitle1)]),
+                      Row(children: [Text('Origin:',style: Theme.of(context).textTheme.headline2),
+                         Text('${cAPLBreedSocre.origin}',style: Theme.of(context).textTheme.subtitle1)])
+              ],
+            ),
           ),
           Icon(cAPLBreedSocre.icon)
         ],

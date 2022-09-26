@@ -14,15 +14,21 @@ class BreedVotationMenuView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var breedProvider = Provider.of<BreedsProvider>(context);
+    //TODO: si cats data esta cargado entonces no hacer nada en el metodo, sino debe cargarlos.[Done]
+    breedProvider.getBreedsInfoIfNeeded();
+
     return MaterialApp(
-      theme: CAThemeData,
+      theme: cAThemeData,
       home: Scaffold(
-        backgroundColor: Color.fromARGB(255, 186, 243, 255),
+        backgroundColor: const Color.fromARGB(255, 173, 207, 255),
         appBar: AppBar(
           title: const Text("Cats API"),
           elevation: 0,
           // ignore: avoid_print
-          actions: const [BreedsScoreButton(), BreedsGroupedByNameButton(),],
+          actions: const [
+            BreedsScoreButton(),
+            BreedsGroupedByNameButton(),
+          ],
         ),
         endDrawer: Drawer(
           child: SafeArea(
@@ -31,35 +37,34 @@ class BreedVotationMenuView extends StatelessWidget {
             child: Column(mainAxisAlignment: MainAxisAlignment.start,
                 // mainAxisSize: MainAxisSize.max,
                 children: [
-                  Text(breedProvider.getTitleOfView()),
+                  Text(
+                    breedProvider.getTitleOfView(),
+                    style: const TextStyle(
+                        fontFamily: "Volkswagen-Serial",
+                        fontWeight: FontWeight.bold),
+                  ),
                   const Divider(),
                   const BreedsByTipeOfView(),
                 ]),
           )),
         ),
         body: SafeArea(
-          child: getRandomVotationBreed(context),
+          child: getRandomVotationBreed(context, breedProvider),
         ),
       ),
     );
   }
 
-  getRandomVotationBreed(BuildContext context) {
-    var breedProvider = Provider.of<BreedsProvider>(context);
+  getRandomVotationBreed(BuildContext context, BreedsProvider provider) {
+    // var breedProvider = Provider.of<BreedsProvider>(context);
     return Container(
-      color: const Color.fromARGB(255, 95, 139, 221),
+      color: const Color.fromARGB(255, 173, 207, 255),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            // color: Colors.amber,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: breedProvider.isBreedsAvailable
-                  ? const CABreedVotationCard()
-                  : const Text("Loading..."),
-            ),
-          ),
+          provider.isBreedsAvailable
+              ? const CABreedVotationCard()
+              : const Text("Loading..."),
         ],
       ),
     );
